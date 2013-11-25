@@ -662,7 +662,7 @@
         <scene sceneID="Yp5-w8-76c">
             <objects>
                 <tableViewController id="zRT-Lp-eFV" customClass="ICOrderbookViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="32" sectionHeaderHeight="10" sectionFooterHeight="10" id="9Tm-04-Wdl">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="32" sectionHeaderHeight="10" sectionFooterHeight="10" id="9Tm-04-Wdl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -675,6 +675,9 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <accessibility key="accessibilityConfiguration" label=""/>
+                                <connections>
+                                    <segue destination="3pt-ps-7XT" kind="modal" identifier="ItemNewOrder" id="B9D-SL-PZ7"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -685,7 +688,7 @@
                     <navigationItem key="navigationItem" title="Orderbook" id="RZH-UY-moO">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="8gh-Yc-tiX">
                             <connections>
-                                <segue destination="3pt-ps-7XT" kind="modal" id="fhx-H0-fjb"/>
+                                <segue destination="3pt-ps-7XT" kind="modal" identifier="NewBlankOrder" id="fhx-H0-fjb"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -771,50 +774,38 @@
                             </tableViewSection>
                             <tableViewSection id="ZVF-Ye-mMw">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="WO1-j8-hEL">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="K0M-Mw-RXe" style="IBUITableViewCellStyleDefault" id="WO1-j8-hEL">
                                         <rect key="frame" x="0.0" y="207" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WO1-j8-hEL" id="iA7-fa-n6y">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I4z-VL-SAU">
-                                                    <rect key="frame" x="14" y="5" width="30" height="33"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <state key="normal" title="Buy">
-                                                        <color key="titleColor" red="0.36862745098039218" green="0.81960784313725488" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                </button>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Buy" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="K0M-Mw-RXe">
+                                                    <rect key="frame" x="15" y="0.0" width="290" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstItem="I4z-VL-SAU" firstAttribute="leading" secondItem="iA7-fa-n6y" secondAttribute="leading" constant="14" id="Fk6-Kk-vTx"/>
-                                                <constraint firstAttribute="centerY" secondItem="I4z-VL-SAU" secondAttribute="centerY" id="kX8-vm-NCY"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Tyq-Vx-b8u">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="HxB-i1-CSH" style="IBUITableViewCellStyleDefault" id="Tyq-Vx-b8u">
                                         <rect key="frame" x="0.0" y="251" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Tyq-Vx-b8u" id="k3k-4l-81a">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pq9-pt-qbK">
-                                                    <rect key="frame" x="14" y="5" width="30" height="33"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <state key="normal" title="Sell">
-                                                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                </button>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Sell" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HxB-i1-CSH">
+                                                    <rect key="frame" x="15" y="0.0" width="290" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstItem="pq9-pt-qbK" firstAttribute="leading" secondItem="k3k-4l-81a" secondAttribute="leading" constant="14" id="OUq-zU-D5U"/>
-                                                <constraint firstAttribute="centerY" secondItem="pq9-pt-qbK" secondAttribute="centerY" id="sQk-LL-VfP"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -825,6 +816,11 @@
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="MWJ-rO-x1G">
                             <connections>
                                 <action selector="cancel:" destination="zs3-gf-fEZ" id="tqT-ox-CN0"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Place order" id="7uJ-6j-7zp">
+                            <connections>
+                                <action selector="placeOrder:" destination="zs3-gf-fEZ" id="W9E-gy-gBB"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -949,4 +945,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="B9D-SL-PZ7"/>
+    </inferredMetricsTieBreakers>
 </document>

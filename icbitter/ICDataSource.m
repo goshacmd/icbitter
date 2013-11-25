@@ -80,9 +80,18 @@
     return [self.modelStore objectsInCollection:type];
 }
 
+- (NSArray *)fetchModelsOfType:(NSString *)type sort:(NSArray *)sortDescriptors {
+    return [[self fetchModelsOfType:type] sortedArrayUsingDescriptors:sortDescriptors];
+}
+
 - (NSArray *)fetchModelsOfType:(NSString *)type matchingPredicate:(NSPredicate *)predicate {
     NSArray *all = [self fetchModelsOfType:type];
     return [all filteredArrayUsingPredicate:predicate];
+}
+
+- (NSArray *)fetchModelsOfType:(NSString *)type matchingPredicate:(NSPredicate *)predicate sort:(NSArray *)sortDescriptors {
+    return [[self fetchModelsOfType:type matchingPredicate:predicate]
+            sortedArrayUsingDescriptors:sortDescriptors];
 }
 
 - (id<ICModelProtocol>)fetchModelOfType:(NSString *)type matchingPredicate:(NSPredicate *)predicate {

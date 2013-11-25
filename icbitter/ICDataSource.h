@@ -20,7 +20,9 @@
 - (id<ICModelProtocol>)upsertDictionary:(NSDictionary *)dictionary forType:(NSString *)type;
 
 - (NSArray *)fetchModelsOfType:(NSString *)type;
+- (NSArray *)fetchModelsOfType:(NSString *)type sort:(NSArray *)sortDescriptors;
 - (NSArray *)fetchModelsOfType:(NSString *)type matchingPredicate:(NSPredicate *)predicate;
+- (NSArray *)fetchModelsOfType:(NSString *)type matchingPredicate:(NSPredicate *)predicate sort:(NSArray *)sortDescriptors;
 - (id<ICModelProtocol>)fetchModelOfType:(NSString *)type matchingPredicate:(NSPredicate *)predicate;
 - (id<ICModelProtocol>)fetchModelWithIdenitfier:(id)identifier ofType:(NSString *)type;
 

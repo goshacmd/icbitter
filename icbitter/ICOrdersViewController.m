@@ -25,7 +25,7 @@
 }
 
 - (void)ordersChanged:(NSNotification *)notification {
-    self.orders = [[[ICDataSource sharedSource] fetchModelsOfType:@"order"] dictionaryGroupedByKeyPath:@"ticker"];
+    self.orders = [[ICDataSource.sharedSource fetchModelsOfType:@"order"] dictionaryGroupedByKeyPath:@"ticker"];
     orderSectionTitles = [self.orders allKeys];
     orderSections = [self.orders allValues];
     

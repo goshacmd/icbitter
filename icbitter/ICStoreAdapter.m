@@ -37,6 +37,7 @@
 - (id)init {
     if (self = [super init]) {
         self.dataSource = ICDataSource.sharedSource;
+        self.orderbookCache = NSMutableDictionary.dictionary;
     }
     
     return self;
@@ -93,9 +94,9 @@
     }
     
     [self.dataSource deleteModelWithIdentifier:ticker ofType:@"orderbook"];
-    [self.dataSource insertDictionary:data forType:@"orderbook"];
+    [self.dataSource insertDictionary:d forType:@"orderbook"];
     
-    [self.orderbookCache setObject:d forKey:ticker];
+    self.orderbookCache[ticker] = d;
     
     [NSNotificationCenter.defaultCenter postNotificationName:ICStoreOrderbooksNotification
                                                       object:nil];

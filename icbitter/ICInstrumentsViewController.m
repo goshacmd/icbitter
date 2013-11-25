@@ -19,8 +19,10 @@
 @implementation ICInstrumentsViewController
 
 - (void)instrumentsChanged:(NSNotification *)notification {
-    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"ticker" ascending:YES];
-    self.instruments = [[[ICDataSource sharedSource] fetchModelsOfType:@"instrument"] sortedArrayUsingDescriptors:@[sortDescriptor]];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"ticker"
+                                                                     ascending:YES];
+    self.instruments = [ICDataSource.sharedSource fetchModelsOfType:@"instrument"
+                                                               sort:@[sortDescriptor]];
     
     [self.tableView reloadData];
 }

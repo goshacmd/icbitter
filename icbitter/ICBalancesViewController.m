@@ -14,10 +14,13 @@
 #import "ICCurrencyBalanceCell.h"
 #import "ICContractBalanceCell.h"
 
-typedef enum {
+enum {
     kCurrenciesSection,
     kContractsSection
-} Sections;
+};
+
+static NSString *const kCurrencyBalanceCell = @"CurrencyBalanceCell";
+static NSString *const kContractBalanceCell = @"ContractBalanceCell";
 
 @interface ICBalancesViewController ()
 
@@ -35,25 +38,28 @@ typedef enum {
 
 - (NSArray *)balancesForSection:(NSInteger)section {
     NSArray *balances = [ICDataSource.sharedSource fetchModelsOfType:@"balance"];
+    
+    NSPredicate *moneyPredicate = [NSPredicate predicateWithFormat:@"isMoney == true"];
+    NSPredicate *contractPredicate = [NSPredicate predicateWithFormat:@"isContract == true"];
+    NSPredicate *moneyTickerNotUSDPredicate = [NSPredicate predicateWithFormat:@"isMoney == true && ticker != 'USD'"];
+    
     if (section == kCurrenciesSection) {
         if (ICSettingsManager.sharedManager.hideUSD) {
-            return [balances filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isMoney == true && ticker != 'USD'"]];
+            return [balances filteredArrayUsingPredicate:moneyTickerNotUSDPredicate];
         } else {
-            return [balances filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isMoney == true"]];
+            return [balances filteredArrayUsingPredicate:moneyPredicate];
         }
     } else {
-        return [balances filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isContract == true"]];
+        return [balances filteredArrayUsingPredicate:contractPredicate];
     }
 }
 
 - (NSString *)cellIdForIndexPath:(NSIndexPath *)indexPath {
-    static NSArray *cells;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        cells = @[ @"CurrencyBalanceCell", @"ContractBalanceCell" ];
-    });
-    
-    return [cells objectAtIndex:indexPath.section];
+    if (indexPath.section == kCurrenciesSection) {
+        return kCurrencyBalanceCell;
+    } else {
+        return kContractBalanceCell;
+    }
 }
 
 #pragma mark - UIViewController

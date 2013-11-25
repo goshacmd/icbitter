@@ -17,7 +17,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *quantity;
 @property (weak, nonatomic) IBOutlet UITextField *price;
 @property (weak, nonatomic) IBOutlet UITableViewCell *initialMargin;
+@property (nonatomic) NSInteger typeSelection;
+@property (strong, nonatomic) NSString *initialPrice;
 
 - (IBAction)cancel:(id)sender;
+- (IBAction)placeOrder:(id)sender;
 
 @end

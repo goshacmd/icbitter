@@ -10,19 +10,32 @@
 #import "ICDataSource.h"
 #import "ICBITOrderbookEntry+Format.h"
 #import "ICOrderbookEntryCell.h"
+#import "ICNewOrderViewController.h"
+
+enum {
+    kOrderbookSells,
+    kOrderbookBuys
+};
 
 @interface ICOrderbookViewController ()
 
 - (void)orderbookChanged:(NSNotification *)notification;
+- (ICBITOrderbookEntry *)entryForIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
 @implementation ICOrderbookViewController
 
 - (void)orderbookChanged:(NSNotification *)notification {
-    self.orderbook = [[ICDataSource sharedSource] fetchModelOfType:@"orderbook" matchingPredicate:[NSPredicate predicateWithFormat:@"ticker == %@", self.ticker]];
+    self.orderbook = [ICDataSource.sharedSource fetchModelOfType:@"orderbook"
+                                               matchingPredicate:[NSPredicate predicateWithFormat:@"ticker == %@", self.ticker]];
     
     [self.tableView reloadData];
+}
+
+- (ICBITOrderbookEntry *)entryForIndexPath:(NSIndexPath *)indexPath {
+    NSArray *entries = indexPath.section == kOrderbookSells ? self.orderbook.sells : self.orderbook.buys;
+    return entries[indexPath.row];
 }
 
 #pragma mark - UIViewController
@@ -49,8 +62,15 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UINavigationController *navigationController = segue.destinationViewController;
-    id newOrderController = navigationController.topViewController;
-    [newOrderController setTicker:self.ticker];
+    ICNewOrderViewController *newOrderController = (ICNewOrderViewController *)navigationController.topViewController;
+    newOrderController.ticker = self.ticker;
+    
+    if ([segue.identifier isEqualToString:@"ItemNewOrder"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        ICBITOrderbookEntry *entry = [self entryForIndexPath:indexPath];
+        newOrderController.initialPrice = entry.formattedPrice;
+        newOrderController.typeSelection = !entry.type;
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -60,7 +80,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
+    if (section == kOrderbookSells) {
         return self.orderbook.sells.count;
     } else {
         return self.orderbook.buys.count;
@@ -85,8 +105,7 @@
                                            reuseIdentifier:cellIdentifier];
     }
     
-    NSArray *entries = indexPath.section == 0 ? self.orderbook.sells : self.orderbook.buys;
-    ICBITOrderbookEntry *entry = entries[indexPath.row];
+    ICBITOrderbookEntry *entry = [self entryForIndexPath:indexPath];
     
     cell.priceLabel.text = entry.formattedPrice;
     

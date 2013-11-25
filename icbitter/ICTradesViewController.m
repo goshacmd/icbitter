@@ -20,8 +20,11 @@
 @implementation ICTradesViewController
 
 - (void)tradesChanged:(NSNotification *)notification {
-    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO];
-    self.trades = [[ICDataSource.sharedSource fetchModelsOfType:@"trade" matchingPredicate:[NSPredicate predicateWithFormat:@"ticker == %@", self.ticker]] sortedArrayUsingDescriptors:@[sortDescriptor]];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"timestamp"
+                                                                     ascending:NO];
+    self.trades = [ICDataSource.sharedSource fetchModelsOfType:@"trade"
+                                             matchingPredicate:[NSPredicate predicateWithFormat:@"ticker == %@", self.ticker]
+                                                         sort:@[sortDescriptor]];
     
     [self.tableView reloadData];
 }
@@ -60,8 +63,8 @@
     ICTradeCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (cell == nil) {
-        cell = (ICTradeCell *)[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                     reuseIdentifier:cellIdentifier];
+        cell = [[ICTradeCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                  reuseIdentifier:cellIdentifier];
     }
     
     ICBITTrade *trade = self.trades[indexPath.row];
